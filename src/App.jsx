@@ -51,6 +51,26 @@ function App() {
     setSelectedActivity((cur) => (cur?.id === activity.id ? null : activity));
   }
 
+  function handleUpdate(updatedActivity) {
+    setActivities((activities) =>
+      activities.map((activity) =>
+        activity.id === updatedActivity.id ? updatedActivity : activity
+      )
+    );
+
+    setSelectedActivity(null);
+  }
+
+  function handleCancelUpdate() {
+    setSelectedActivity(null);
+  }
+
+  function handleDelete(activityToDelete) {
+    setActivities((activities) =>
+      activities.filter((activity) => activity.id !== activityToDelete.id)
+    );
+  }
+
   const updateActivity = selectedActivity?.id === activities.id;
 
   return (
@@ -62,6 +82,8 @@ function App() {
             <CreateActivity
               selectedActivity={selectedActivity}
               onAddActivity={handleActivity}
+              onUpdateActivity={handleUpdate}
+              onCancelUpdate={handleCancelUpdate}
             />
           </>
         )}
@@ -71,6 +93,8 @@ function App() {
             <CreateActivity
               selectedActivity={selectedActivity}
               onAddActivity={handleActivity}
+              onUpdateActivity={handleUpdate}
+              onCancelUpdate={handleCancelUpdate}
             />
           </>
         )}
@@ -85,6 +109,7 @@ function App() {
               selectedActivity={selectedActivity}
               key={activity.id}
               onSelection={handleSelect}
+              onDelete={handleDelete}
             />
           ))}
       </div>
@@ -98,6 +123,7 @@ function App() {
               selectedActivity={selectedActivity}
               key={activity.id}
               onSelection={handleSelect}
+              onDelete={handleDelete}
             />
           ))}
       </div>
@@ -111,6 +137,7 @@ function App() {
               selectedActivity={selectedActivity}
               key={activity.id}
               onSelection={handleSelect}
+              onDelete={handleDelete}
             />
           ))}
       </div>

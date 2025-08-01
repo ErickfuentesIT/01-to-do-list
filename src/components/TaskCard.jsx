@@ -1,10 +1,21 @@
 import Button from "./Button";
 
-export default function TaskCard({ activity, onSelection, selectedActivity }) {
+export default function TaskCard({
+  activity,
+  onSelection,
+  selectedActivity,
+  onDelete,
+}) {
   const isSelected = selectedActivity?.id === activity.id;
   return (
     <div className="task-card">
-      <span className="task-title">{activity.title}</span>
+      <div className="task-title">
+        <span>{activity.title}</span>
+        <span className="boton" onClick={() => onDelete(activity)}>
+          &#88;
+        </span>
+      </div>
+
       <p className="task-description">{activity.description}</p>
       <div className="task-meta">
         <span>🕒 {activity.priority}</span>

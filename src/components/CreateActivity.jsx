@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import Button from "./Button";
 
-export default function CreateActivity({ onAddActivity, selectedActivity }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+export default function CreateActivity({
+  onAddActivity,
+  selectedActivity,
+  onUpdateActivity,
+  onCancelUpdate,
+}) {
+  const [title, setTitle] = useState(null);
+  const [description, setDescription] = useState(null);
   const [priority, setPriority] = useState("High");
-  const [assignedTo, setAssignedTo] = useState("");
+  const [assignedTo, setAssignedTo] = useState(null);
   const [status, setStatus] = useState("todo");
 
   useEffect(() => {
@@ -43,6 +48,30 @@ export default function CreateActivity({ onAddActivity, selectedActivity }) {
     setStatus("todo");
   }
 
+  function handleUpdateFields(e) {
+    e.preventDefault();
+
+    if (!title || !description || !priority || !assignedTo || !status) return;
+
+    const updatedActivity = {
+      id: selectedActivity.id,
+      title,
+      description,
+      priority,
+      assignedTo,
+      status,
+    };
+    console.log(updatedActivity);
+
+    onUpdateActivity(updatedActivity);
+
+    setTitle(null);
+    setDescription(null);
+    setPriority("High");
+    setAssignedTo(null);
+    setStatus("todo");
+  }
+
   function handleClearFields() {
     setTitle("");
     setDescription("");
@@ -52,7 +81,10 @@ export default function CreateActivity({ onAddActivity, selectedActivity }) {
   }
 
   return (
-    <form className="task-form" onSubmit={handleInsertForm}>
+    <form
+      className="task-form"
+      onSubmit={selectedActivity ? handleUpdateFields : handleInsertForm}
+    >
       <label>📝 Title</label>
       <input
         type="text"
@@ -87,8 +119,13 @@ export default function CreateActivity({ onAddActivity, selectedActivity }) {
         onChange={(e) => setAssignedTo(e.target.value)}
       />
 
-      <Button text="Add Task" />
-      <Button text="Clear" onClick={handleClearFields} />
+      <Button text={selectedActivity ? "Update Task" : "Add Task"} />
+      {(title || description || assignedTo || selectedActivity) && (
+        <Button
+          text={selectedActivity ? "Cancel" : "Clear"}
+          onClick={selectedActivity ? onCancelUpdate : handleClearFields}
+        />
+      )}
     </form>
   );
 }

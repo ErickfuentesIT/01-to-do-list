@@ -1,6 +1,7 @@
 .app {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  width: 100vw;
   gap: 1rem;
   height: 100vh;
   padding: 1rem;
@@ -33,7 +34,6 @@
   margin-bottom: 1rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s;
-  cursor: grab;
 }
 
 .task-card:hover {
@@ -41,6 +41,8 @@
 }
 
 .task-title {
+  display: grid;
+  grid-template-columns: 95% 5%;
   font-weight: 600;
   font-size: 1rem;
   margin-bottom: 0.5rem;
@@ -106,4 +108,18 @@
 
 .button:hover {
   background-color: #4338ca;
+}
+
+.boton {
+  display: inline-block;
+  color: black; /* Color del texto */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar encima */
+  text-align: center;
+  user-select: none; /* Evita que se seleccione el texto */
+  transition: background-color 0.2s;
+}
+
+.boton:hover {
+  background-color: #4f46e5; /* Color al pasar el mouse */
 }
